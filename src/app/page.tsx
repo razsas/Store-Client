@@ -1,12 +1,15 @@
 import { Metadata } from "next";
-import ItemsManager from "../components/ItemsManager";
+import ItemsWrapper from "../components/items/ItemsWrapper";
 import ItemButton from "../components/ItemButton";
+import { getItemsForServer } from "../utils/utils";
 
 export const metadata: Metadata = {
-  title: "Store App",
+  title: "Browse Items",
 };
 
 export default async function Home() {
+  const initialItems = await getItemsForServer().catch(() => []);
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -14,7 +17,7 @@ export default async function Home() {
         <ItemButton mode="add" />
       </div>
 
-      <ItemsManager />
+      <ItemsWrapper initialItems={initialItems} />
     </div>
   );
 }

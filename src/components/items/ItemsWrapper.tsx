@@ -1,13 +1,18 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { SORT_OPTIONS, SortOption } from "../types";
-import { useItems } from "../hooks/useItems";
+import { Item } from "../../types";
+import { SORT_OPTIONS, SortOption } from "../../types";
+import { useItems } from "../../hooks/useItems";
 import SearchBar from "./SearchBar";
 import FilteredItemList from "./FilteredItemList";
 
-export default function ItemsManager() {
-  const { items, error } = useItems([]);
+interface ItemsWrapperProps {
+  initialItems?: Item[];
+}
+
+export default function ItemsWrapper({ initialItems }: ItemsWrapperProps) {
+  const { items, error } = useItems(initialItems ?? []);
 
   const [q, setQ] = useState("");
   const [type, setType] = useState("");

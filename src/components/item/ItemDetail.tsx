@@ -1,8 +1,9 @@
 "use client";
 
-import { Item } from "../types";
-import ItemButton from "./ItemButton";
-import BackButton from "./BackButton";
+import { Item } from "../../types";
+import ItemButton from "../ItemButton";
+import BackButton from "../BackButton";
+import DeleteItemButton from "../DeleteItemButton";
 
 export default function ItemCard({ item }: { item: Item }) {
   const labelClasses =
@@ -40,6 +41,7 @@ export default function ItemCard({ item }: { item: Item }) {
         <p className="text-green-600 font-semibold text-sm mt-1">In Stock</p>
         <div className="flex flex-col gap-3">
           <ItemButton mode="edit" id={item.id} />
+          <DeleteItemButton id={item.id} itemName={item.name} />
         </div>
       </div>
 

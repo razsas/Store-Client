@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Item } from "../types";
+import { Item } from "../../types";
 
 export default function ItemCard({ item }: { item: Item }) {
   const labelClasses =

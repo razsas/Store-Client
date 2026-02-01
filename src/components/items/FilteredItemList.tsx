@@ -1,5 +1,5 @@
 "use client";
-import { Item } from "../types";
+import { Item } from "../../types";
 import ItemCard from "./ItemCard";
 
 export default function FilteredItemList({
@@ -7,9 +7,9 @@ export default function FilteredItemList({
   apiError,
 }: {
   items: Item[];
-  apiError: string | null;
+  apiError?: Error | null;
 }) {
-  if (apiError) return <ErrorState message={apiError} />;
+  if (apiError) return <ErrorState message={apiError.message} />;
   if (items.length === 0) return <EmptyState />;
 
   return (

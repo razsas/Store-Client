@@ -2,9 +2,11 @@
 
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { Item, ITEM_TYPES } from "../types";
-import { API_BASE_URL, NAME_SELLER_REGEX, PRICE_REGEX } from "../constants";
-import BackButton from "./BackButton";
+import { useSWRConfig } from "swr";
+import { Item, ITEM_TYPES } from "../../types";
+import { createItem, updateItem, validateItemForm } from "../../utils/utils";
+import { ITEMS_KEY, itemKey } from "../../hooks/useItems";
+import BackButton from "../BackButton";
 
 interface ItemFormProps {
   initialData?: Item;
@@ -16,51 +18,37 @@ export default function ItemForm({
   isEdit = false,
 }: ItemFormProps) {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   async function formAction(_prevState: string | null, formData: FormData) {
-    const name = formData.get("name") as string;
-    const seller = formData.get("seller") as string;
-    const type = formData.get("type") as string;
+    const name = (formData.get("name") as string).trim();
+    const seller = (formData.get("seller") as string).trim();
+    const type = (formData.get("type") as string).trim();
     const priceStr = formData.get("price") as string;
     const price = parseFloat(priceStr);
 
-    if (!NAME_SELLER_REGEX.test(name)) {
-      return "Item name must be 3-30 characters and contain only letters, numbers, and spaces.";
-    }
-    if (!NAME_SELLER_REGEX.test(seller)) {
-      return "Seller name must be 3-30 characters and contain only letters, numbers, and spaces.";
-    }
-    if (!PRICE_REGEX.test(priceStr)) {
-      return "Price must be a positive number with up to 2 decimal places.";
-    }
+    const validationError = validateItemForm({ name, seller, priceStr });
+    if (validationError) return validationError;
 
-    const data = {
-      name,
-      seller,
-      type,
-      price,
-    };
+    const payload = { name, seller, type, price };
 
     try {
-      const url = isEdit
-        ? `${API_BASE_URL}/items/${initialData?.id}`
-        : `${API_BASE_URL}/items`;
-      const res = await fetch(url, {
-        method: isEdit ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        return errorData.error || "Failed to save item";
+      if (isEdit && initialData?.id) {
+        await updateItem(initialData.id, payload);
+      } else {
+        await createItem(payload);
       }
-
+      await mutate(ITEMS_KEY);
+      if (isEdit && initialData?.id) {
+        await mutate(itemKey(initialData.id));
+      }
       router.push("/");
       router.refresh();
       return null;
-    } catch {
-      return "An error occurred. Please try again.";
+    } catch (err) {
+      return err instanceof Error
+        ? err.message
+        : "An error occurred. Please try again.";
     }
   }
 

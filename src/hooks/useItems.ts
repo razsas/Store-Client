@@ -1,23 +1,34 @@
 import useSWR from "swr";
-import { API_BASE_URL } from "../constants";
 import { Item } from "../types";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const ITEMS_KEY = "items";
+
+export function itemKey(id: string | null) {
+  return id ? [ITEMS_KEY, id] : null;
+}
 
 export function useItems(fallbackData?: Item[]) {
-  const { data, error, mutate, isLoading } = useSWR<Item[]>(
-    `${API_BASE_URL}/items`,
-    fetcher,
-    {
-      fallbackData,
-      revalidateOnFocus: false,
-    },
-  );
+  const { data, error, mutate, isLoading } = useSWR<Item[]>(ITEMS_KEY, null, {
+    fallbackData,
+  });
 
   return {
-    items: data || [],
+    items: data ?? [],
     isLoading,
-    error,
+    error: error instanceof Error ? error : undefined,
     mutate,
   };
 }
+
+export function useItem(id: string | null) {
+  const { data, error, mutate, isLoading } = useSWR<Item | null>(itemKey(id));
+
+  return {
+    item: data ?? null,
+    isLoading,
+    error: error instanceof Error ? error : undefined,
+    mutate,
+  };
+}
+
+export { ITEMS_KEY };

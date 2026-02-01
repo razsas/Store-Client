@@ -8,7 +8,7 @@ interface ItemButtonProps {
 
 export default function ItemButton({ mode, id }: ItemButtonProps) {
   const isEdit = mode === ITEM_BUTTON_MODES.EDIT;
-  const href = isEdit ? `/${id}/edit` : "/createItem";
+  const href = isEdit ? `/${id}/edit` : "/create-item";
   const text = isEdit ? "Edit Item" : "Add Item";
   const colorClasses = isEdit
     ? "bg-amber-600 hover:bg-amber-700 focus:ring-amber-300"

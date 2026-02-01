@@ -1,18 +1,18 @@
-import { notFound } from "next/navigation";
-import ItemDetail from "@/src/components/ItemDetail";
+import type { Metadata } from "next";
+import ItemDetailWrapper from "@/src/components/item/ItemDetailWrapper";
 import { getItem } from "@/src/utils/utils";
 
-export default async function ItemPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+type Props = { params: Promise<{ id: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = await getItem(id);
+  return {
+    title: item ? `${item.name} | Store App` : "Item not found",
+  };
+}
 
-  if (!item) {
-    notFound();
-  }
-
-  return <ItemDetail item={item} />;
+export default async function ItemPage({ params }: Props) {
+  const { id } = await params;
+  return <ItemDetailWrapper id={id} />;
 }

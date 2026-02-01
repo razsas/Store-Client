@@ -1,25 +1,18 @@
-import ItemForm from "@/src/components/ItemForm";
+import type { Metadata } from "next";
 import { getItem } from "@/src/utils/utils";
-import { notFound } from "next/navigation";
+import EditFormWrapper from "@/src/components/item form/EditFormWrapper";
 
-export default async function EditItemPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+type Props = { params: Promise<{ id: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = await getItem(id);
+  return {
+    title: item ? `Edit: ${item.name} | Store App` : "Item not found",
+  };
+}
 
-  if (!item) {
-    notFound();
-  }
-
-  return (
-    <div>
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
-        Edit Item
-      </h1>
-      <ItemForm initialData={item} isEdit={true} />
-    </div>
-  );
+export default async function EditItemPage({ params }: Props) {
+  const { id } = await params;
+  return <EditFormWrapper id={id} />;
 }

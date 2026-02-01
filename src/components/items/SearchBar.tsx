@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { ITEM_TYPES, SORT_OPTIONS, SortOption } from "../types";
+import { ITEM_TYPES, SORT_OPTIONS, SortOption } from "../../types";
 
 interface SearchBarProps {
   q: string;

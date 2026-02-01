@@ -1,4 +1,9 @@
-import ItemForm from "@/src/components/ItemForm";
+import type { Metadata } from "next";
+import ItemForm from "@/src/components/item form/ItemForm";
+
+export const metadata: Metadata = {
+  title: "Add Item",
+};
 
 export default function NewItemPage() {
   return (
