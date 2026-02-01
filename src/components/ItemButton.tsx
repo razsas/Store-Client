@@ -8,20 +8,52 @@ interface ItemButtonProps {
 
 export default function ItemButton({ mode, id }: ItemButtonProps) {
   const isEdit = mode === ITEM_BUTTON_MODES.EDIT;
-  const href = isEdit ? `/${id}/edit` : "/create-item";
+  const href = isEdit ? `/${id}/edit` : "/new";
   const text = isEdit ? "Edit Item" : "Add Item";
+
   const colorClasses = isEdit
-    ? "bg-amber-600 hover:bg-amber-700 focus:ring-amber-300"
-    : "bg-blue-700 hover:bg-blue-800 focus:ring-blue-300";
+    ? "text-amber-600 border-amber-200 hover:bg-amber-50 hover:border-amber-300"
+    : "text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300";
+
+  const icon = isEdit ? (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 transition-transform group-hover:scale-110"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+      />
+    </svg>
+  ) : (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 transition-transform group-hover:scale-110"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 4v16m8-8H4"
+      />
+    </svg>
+  );
 
   return (
-    <div className="flex items-center">
-      <Link
-        href={href}
-        className={`text-white ${colorClasses} focus:ring-4 font-medium rounded-lg text-sm px-4 py-2 transition-colors`}
-      >
-        {text}
-      </Link>
-    </div>
+    <Link
+      href={href}
+      className={`w-full bg-white border ${colorClasses} py-3 px-6 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2 group`}
+    >
+      {icon}
+      {text}
+    </Link>
   );
 }

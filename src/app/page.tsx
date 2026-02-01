@@ -14,7 +14,9 @@ export default async function Home() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-extrabold text-gray-900">Browse Items</h1>
-        <ItemButton mode="add" />
+        <div className="w-auto">
+          <ItemButton mode="add" />
+        </div>
       </div>
 
       <ItemsWrapper initialItems={initialItems} />
