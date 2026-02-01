@@ -46,14 +46,14 @@ export default function DeleteItemButton({
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="flex-1 bg-red-600 text-white py-2 px-4 rounded-md text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50"
+            className="flex-1 bg-red-600 text-white py-2 px-4 rounded-md text-sm font-bold hover:bg-red-700 transition-colors disabled:opacity-50 cursor-pointer"
           >
             {isDeleting ? "Deleting..." : "Yes, Delete"}
           </button>
           <button
             onClick={() => setShowConfirm(false)}
             disabled={isDeleting}
-            className="flex-1 bg-white text-gray-700 border border-gray-300 py-2 px-4 rounded-md text-sm font-bold hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="flex-1 bg-white text-gray-700 border border-gray-300 py-2 px-4 rounded-md text-sm font-bold hover:bg-gray-50 transition-colors disabled:opacity-50 cursor-pointer"
           >
             Cancel
           </button>
@@ -65,7 +65,7 @@ export default function DeleteItemButton({
   return (
     <button
       onClick={() => setShowConfirm(true)}
-      className="w-full bg-white text-red-600 border border-red-200 py-3 px-6 rounded-xl font-bold hover:bg-red-50 hover:border-red-300 transition-all duration-200 flex items-center justify-center gap-2 group"
+      className="w-full bg-white text-red-600 border border-red-200 py-3 px-6 rounded-xl font-bold hover:bg-red-50 hover:border-red-300 transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -50,7 +50,7 @@ export default function ItemButton({ mode, id }: ItemButtonProps) {
   return (
     <Link
       href={href}
-      className={`w-full bg-white border ${colorClasses} py-3 px-6 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2 group`}
+      className={`w-full bg-white border ${colorClasses} py-3 px-6 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer`}
     >
       {icon}
       {text}
