@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "@/src/constants";
 import { NAME_SELLER_REGEX, PRICE_REGEX } from "@/src/constants";
-import { Item } from "@/src/types";
+import { CreateItemPayload, Item, UpdateItemPayload } from "@/src/types";
 
 const ITEMS_URL = `${API_BASE_URL}/items`;
 
@@ -36,7 +36,6 @@ export async function getItems(): Promise<Item[]> {
   return res.json();
 }
 
-/** Use for server-side prefetch (e.g. in page.tsx). Bypasses cache for fresh data. */
 export async function getItemsForServer(): Promise<Item[]> {
   const res = await fetch(ITEMS_URL, { cache: "no-store" });
   if (!res.ok) {
@@ -57,15 +56,6 @@ export async function getItem(id: string): Promise<Item | null> {
   }
   return res.json();
 }
-
-export type CreateItemPayload = {
-  name: string;
-  seller: string;
-  type: string;
-  price: number;
-};
-
-export type UpdateItemPayload = CreateItemPayload;
 
 export async function createItem(payload: CreateItemPayload): Promise<Item> {
   const res = await fetch(ITEMS_URL, {

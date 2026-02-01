@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useDebounce } from "use-debounce";
 import { ITEM_TYPES, SORT_OPTIONS, SortOption } from "../../types";
 
 interface SearchBarProps {
@@ -21,13 +19,6 @@ export default function SearchBar({
   sortBy,
   setSortBy,
 }: SearchBarProps) {
-  const [localSearch, setLocalSearch] = useState(q);
-  const [debouncedSearch] = useDebounce(localSearch, 300);
-
-  useEffect(() => {
-    setQ(debouncedSearch);
-  }, [debouncedSearch, setQ]);
-
   const inputClasses =
     "bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5";
   const labelClasses = "block mb-2 text-sm font-medium text-gray-900 ps-2.5";
@@ -43,8 +34,8 @@ export default function SearchBar({
           type="text"
           className={inputClasses}
           placeholder="Search items..."
-          value={localSearch}
-          onChange={(e) => setLocalSearch(e.target.value)}
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
         />
       </div>
 

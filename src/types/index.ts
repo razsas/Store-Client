@@ -34,3 +34,12 @@ export const ITEM_TYPES = {
   HOME: "Home",
   OTHER: "Other",
 } as const;
+
+export type CreateItemPayload = {
+  name: string;
+  seller: string;
+  type: string;
+  price: number;
+};
+
+export type UpdateItemPayload = CreateItemPayload;

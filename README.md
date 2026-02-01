@@ -4,11 +4,18 @@ Modern web application built with Next.js and React for managing and browsing st
 
 ## Technologies Used
 
-- **Next.js 16**: The React framework for the web.
+- **Next.js 16**: The React framework for the web using App Router.
 - **React 19**: Component-based UI library.
+- **SWR**: Data fetching, caching, and state management.
 - **Tailwind CSS 4**: Utility-first CSS framework.
 - **TypeScript**: For type-safe development.
-- **use-debounce**: Hook for debouncing search input.
+
+## Key Features
+
+- **Global SWR Configuration**: Centralized fetcher and revalidation settings via `SWRProvider`.
+- **Hybrid Rendering**: Combines Server Components for SEO and Client Components for dynamic interactivity.
+- **Instant Search**: Optimized client-side filtering for immediate user feedback.
+- **Cache Synchronization**: Automatic cache invalidation on item updates and deletions.
 
 ## Project Structure
 
@@ -16,22 +23,20 @@ Modern web application built with Next.js and React for managing and browsing st
 client/
 ├── src/
 │   ├── app/                 # Next.js App Router (pages and layouts)
-│   │   ├── [id]/            # Item Details page
-│   │   │   ├── edit/        # Edit Item page
-│   │   ├── new/             # Add New Item page
-│   │   ├── globals.css      # Global styles
-│   │   ├── layout.tsx       # Main app layout
+│   │   ├── [id]/            # Item Detail & Edit pages
+│   │   ├── new/             # Create Item page
+│   │   ├── layout.tsx       # Root layout with SWRProvider
 │   │   └── page.tsx         # Home page (Item Listing)
 │   ├── components/          # Reusable UI components
-│   │   ├── layout/          # Global layout components (Header)
-│   │   ├── FilteredItemList # Logic for searching/filtering items
-│   │   ├── ItemButton       # Unified Add/Edit action button
-│   │   ├── ItemCard         # Individual item display card
-│   │   ├── ItemDetail       # Detailed item view
-│   │   ├── ItemForm         # Form for creating/editing items
-│   │   └── SearchBar        # Search and filter interface
-│   ├── constants.ts         # App-wide constants (e.g., API URL)
-│   └── types/               # TypeScript models
+│   │   ├── item/            # Detail-specific components (ItemDetailWrapper)
+│   │   ├── items/           # List-specific components (ItemsWrapper, SearchBar)
+│   │   ├── item form/       # Form-related components (ItemForm, EditFormWrapper)
+│   │   ├── SWRProvider.tsx  # Global SWR configuration
+│   │   └── Header.tsx       # Global navigation
+│   ├── hooks/               # Custom hooks (useItems, useItem)
+│   ├── utils/               # API utilities and validation
+│   ├── constants.ts         # App-wide constants
+│   └── types/               # TypeScript models & types
 ├── package.json             # Scripts and dependencies
 └── next.config.ts           # Next.js configuration
 ```
